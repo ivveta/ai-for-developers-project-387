@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0 (2026-08-25)
+
+
+### Features
+
+* add calendar booking application ([#1](https://github.com/ivveta/ai-for-developers-project-387/issues/1)) ([6985615](https://github.com/ivveta/ai-for-developers-project-387/commit/6985615159102beb9cd52f992436b9e8c27dc6b7))
+
 ## [1.0.1](https://github.com/ivveta/ai-for-developers-project-386/compare/v1.0.0...v1.0.1) (2026-08-24)
 
 
