@@ -84,6 +84,46 @@ describe('B4: окно — ровно 14 дней', () => {
   });
 });
 
+describe('B4w: выходные дни не содержат слотов', () => {
+  const w = buildWindowSlots({ id: 'meeting-15', durationMinutes: 15 }, NOW_0900, []);
+
+  it('суббота 4 апреля — пустой день', () => {
+    // 31 марта = вторник, значит 4 апреля = суббота (индекс 4)
+    const sat = w.days[4];
+    expect(sat.date).toBe('2026-04-04');
+    expect(sat.freeCount).toBe(0);
+    expect(sat.slots).toHaveLength(0);
+  });
+
+  it('воскресенье 5 апреля — пустой день', () => {
+    const sun = w.days[5];
+    expect(sun.date).toBe('2026-04-05');
+    expect(sun.freeCount).toBe(0);
+    expect(sun.slots).toHaveLength(0);
+  });
+
+  it('вторая суббота 11 апреля — пустой день', () => {
+    const sat2 = w.days[11];
+    expect(sat2.date).toBe('2026-04-11');
+    expect(sat2.freeCount).toBe(0);
+    expect(sat2.slots).toHaveLength(0);
+  });
+
+  it('второе воскресенье 12 апреля — пустой день', () => {
+    const sun2 = w.days[12];
+    expect(sun2.date).toBe('2026-04-12');
+    expect(sun2.freeCount).toBe(0);
+    expect(sun2.slots).toHaveLength(0);
+  });
+
+  it('пятница 3 апреля — содержит слоты', () => {
+    const fri = w.days[3];
+    expect(fri.date).toBe('2026-04-03');
+    expect(fri.freeCount).toBe(36);
+    expect(fri.slots).toHaveLength(36);
+  });
+});
+
 describe('B5: слоты на 14-й день', () => {
   it('у последнего дня окна слоты присутствуют', () => {
     const w = buildWindowSlots({ id: 'meeting-15', durationMinutes: 15 }, NOW_0900, []);
@@ -196,6 +236,13 @@ describe('предикаты для сервиса бронирований', ()
     expect(isWithinWorkday(msk(4, 1, 8, 0), msk(4, 1, 8, 15))).toBe(false);
   });
 
+  it('isWithinWorkday: отклоняет выходные', () => {
+    // 4 апреля 2026 — суббота
+    expect(isWithinWorkday(msk(4, 4, 9, 0), msk(4, 4, 9, 15))).toBe(false);
+    // 5 апреля 2026 — воскресенье
+    expect(isWithinWorkday(msk(4, 5, 9, 0), msk(4, 5, 9, 15))).toBe(false);
+  });
+
   it('isInBookingWindow: Р6/Р8', () => {
     const now = msk(3, 31, 11, 20);
     expect(isInBookingWindow(msk(3, 31, 11, 20), now)).toBe(true);
@@ -203,6 +250,14 @@ describe('предикаты для сервиса бронирований', ()
     expect(isInBookingWindow(msk(4, 13, 9, 0), now)).toBe(true); // 14-й день окна
     expect(isInBookingWindow(msk(4, 13, 18, 0), now)).toBe(false); // верхняя граница
     expect(isInBookingWindow(msk(4, 14, 9, 0), now)).toBe(false); // 15-й день (D2)
+  });
+
+  it('isInBookingWindow: отклоняет выходные', () => {
+    const now = msk(3, 31, 9, 0);
+    // 4 апреля 2026 — суббота
+    expect(isInBookingWindow(msk(4, 4, 9, 0), now)).toBe(false);
+    // 5 апреля 2026 — воскресенье
+    expect(isInBookingWindow(msk(4, 5, 9, 0), now)).toBe(false);
   });
 });
 

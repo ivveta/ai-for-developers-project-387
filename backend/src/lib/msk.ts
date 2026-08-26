@@ -42,6 +42,13 @@ export function mskDateString(utc: Date): string {
   return `${p.year}-${pad2(p.month)}-${pad2(p.day)}`;
 }
 
+/** Выходной день в Europe/Moscow: суббота (6) или воскресенье (0). */
+export function isWeekend(utc: Date): boolean {
+  const shifted = new Date(utc.getTime() + MSK_OFFSET_MINUTES * 60_000);
+  const dow = shifted.getUTCDay();
+  return dow === 0 || dow === 6;
+}
+
 /** Сборка момента UTC из местного времени Europe/Moscow. */
 export function mskToUtc(local: MskLocal): Date {
   return new Date(
