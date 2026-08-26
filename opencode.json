@@ -4,7 +4,7 @@
     "bash": {
       "*": "ask",
       "npm test*": "allow",
-      "npm run *": "allow",
+      "npm run*": "allow",
       "npm ci*": "allow",
       "npm install*": "allow",
       "git status*": "allow",
