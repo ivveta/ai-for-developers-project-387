@@ -9,3 +9,4 @@ backend/dist
 test-results/
 playwright-report/
 
+opencode.json
