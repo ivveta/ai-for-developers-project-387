@@ -12,6 +12,7 @@ description: Закоммитить изменения по Conventional Commits
    (@commitlint/config-conventional):
    - формат `<type>(<scope>): <subject>` или `<type>: <subject>`
    - type: build, chore, ci, docs, feat, fix, perf, refactor, revert, style, test
+   - summary (subject) пиши на русском языке
    - императив, строчные буквы, без точки в конце subject
    - заголовок ≤ 100 символов, строки тела ≤ 100 символов
 4. `git add <файлы>`, затем `git commit` с сообщением через heredoc.
