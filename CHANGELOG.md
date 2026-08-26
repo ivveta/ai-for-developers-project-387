@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/ivveta/ai-for-developers-project-387/compare/v1.0.0...v1.0.1) (2026-08-26)
+
+
+### Bug Fixes
+
+* **ci:** allow npm commands in opencode permissions for CI ([a92260c](https://github.com/ivveta/ai-for-developers-project-387/commit/a92260c33a74cffb70660654eab13eab9740f5cf))
+
 ## 1.0.0 (2026-08-25)
 
 
