@@ -26,8 +26,8 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
 
-      - name: Add git wrapper to PATH
-        run: echo "${{ github.workspace }}/.github/scripts" >> $GITHUB_PATH
+      - name: Configure git hooks
+        run: git config core.hooksPath .github/git-hooks
 
       - name: Run opencode
         uses: anomalyco/opencode/github@latest
