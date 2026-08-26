@@ -26,9 +26,6 @@ jobs:
           fetch-depth: 1
           persist-credentials: false
 
-      - name: Configure git hooks
-        run: git config core.hooksPath .github/git-hooks
-
       - name: Run opencode
         uses: anomalyco/opencode/github@latest
         env:
@@ -40,3 +37,8 @@ jobs:
             Все коммиты ДОЛЖНЫ быть по Conventional Commits (feat:, fix:, chore:, и т.д.).
             Формат: type: описание на русском языке. Без точки в конце.
             Примеры: fix: исправить валидацию выходных дней, feat: добавить страницу ошибки.
+
+            ВАЖНО: После завершения работы сделай ОДИН итоговый git-коммит со всеми
+            изменениями (git add . && git commit). Не оставляй uncommitted файлы —
+            иначе GitHub Action автоматически создаст коммит без Conventional Commits
+            формата и pipeline упадёт.
