@@ -33,3 +33,7 @@ jobs:
           OPENCODE_PERMISSION: '{"*": "allow"}'
         with:
           model: opencode/big-pickle
+          prompt: |
+            Все коммиты ДОЛЖНЫ быть по Conventional Commits (feat:, fix:, chore:, и т.д.).
+            Формат: type: описание на русском языке. Без точки в конце.
+            Примеры: fix: исправить валидацию выходных дней, feat: добавить страницу ошибки.
