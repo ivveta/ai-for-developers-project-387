@@ -7,7 +7,7 @@
       "git diff*": "allow",
       "git log*": "allow",
       "npm test*": "allow",
-      "npm ci*": "allow",
+      "npm ci*": "allow"
     }
   }
 }
