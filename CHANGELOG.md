@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/ivveta/ai-for-developers-project-387/compare/v1.0.1...v1.0.2) (2026-08-26)
+
+
+### Bug Fixes
+
+* **ci:** убрать пробел в паттерне npm run для корректного матчинга ([b731919](https://github.com/ivveta/ai-for-developers-project-387/commit/b731919e623195389fb6e5f7b7986cbd8792842e))
+* **ci:** упростить permissions оставив allow для всех bash-команд ([93b7163](https://github.com/ivveta/ai-for-developers-project-387/commit/93b71636b4600a70fca270eac9cd9f5f448de161))
+
 ## [1.0.1](https://github.com/ivveta/ai-for-developers-project-387/compare/v1.0.0...v1.0.1) (2026-08-26)
 
 
