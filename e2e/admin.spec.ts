@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { resetDb, seedDefaults, createBooking, findFreeSlot, tomorrowMsk, dayAfterTomorrowMsk } from './helpers';
+import { resetDb, seedDefaults, createBooking, findFreeSlot, tomorrowMsk } from './helpers';
 
 test.describe('E2E-ADM-01. Админ-панель: хаб с переходами', () => {
   test('две карточки-ссылки с переходами', async ({ page }) => {
@@ -72,11 +72,12 @@ test.describe('E2E-ADM-04. Просмотр предстоящих встреч'
   });
 
   test('список встреч: сортировка, данные', async ({ page }) => {
-    // Слоты на разных днях (завтра и послезавтра): пересечение интервалов
-    // запрещено глобально (Р7), а первый свободный слот сегодня — на границе
-    // «сейчас» и может успеть стать прошлым к моменту отправки.
+    // Слоты на разных днях (завтра или следующий рабочий день и позже):
+    // пересечение интервалов запрещено глобально (Р7), а первый свободный слот
+    // сегодня — на границе «сейчас» и может успеть стать прошлым к моменту отправки.
+    // Выходные исключены из генерации, поэтому поиск переходит на рабочие дни.
     const slot1 = await findFreeSlot('meeting-15', { date: tomorrowMsk() });
-    const slot2 = await findFreeSlot('meeting-30', { date: dayAfterTomorrowMsk() });
+    const slot2 = await findFreeSlot('meeting-30', { excludeDate: slot1.date });
 
     await createBooking({
       eventTypeId: 'meeting-15',
