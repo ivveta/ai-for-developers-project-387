@@ -74,20 +74,16 @@ export function tomorrowMsk(): string {
 }
 
 /**
- * Послезавтрашний день в Europe/Moscow в формате YYYY-MM-DD.
- */
-export function dayAfterTomorrowMsk(): string {
-  return mskDateOffset(2);
-}
-
-/**
  * Получить первый свободный слот для типа события из API.
  * Возвращает { date, startAt, dayNumber, timeText }.
  * timeText — часы в формате "HH:MM" для поиска кнопки слота.
+ * date — нижняя граница поиска: выходные и переполненные дни пропускаются,
+ * поиск переходит на следующий доступный рабочий день окна.
+ * excludeDate — день, который нужно пропустить (нужно два слота на разных днях).
  */
 export async function findFreeSlot(
   eventTypeId: string,
-  opts?: { date?: string },
+  opts?: { date?: string; excludeDate?: string },
 ): Promise<{ date: string; startAt: string; dayNumber: number; timeText: string }> {
   const res = await fetch(`${API_BASE}/api/event-types/${eventTypeId}/slots`);
   const body = await res.json() as { data: { days: Array<{ date: string; slots: Array<{ start: string; status: string }> }> } };
@@ -96,7 +92,8 @@ export async function findFreeSlot(
     // Первый свободный слот сегодня всегда на границе «сейчас»: к моменту отправки
     // формы он становится прошлым → 422. Берём слот с завтра или позже.
     if (day.date === todayMsk()) continue;
-    if (opts?.date && day.date !== opts.date) continue;
+    if (opts?.date && day.date < opts.date) continue;
+    if (opts?.excludeDate && day.date === opts.excludeDate) continue;
     const free = day.slots.find((s) => s.status === 'free');
     if (free) {
       // startAt в формате "2026-08-18T09:00:00+03:00" — время уже в MSK
