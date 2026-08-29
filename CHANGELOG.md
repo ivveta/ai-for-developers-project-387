@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/ivveta/ai-for-developers-project-387/compare/v1.1.0...v1.2.0) (2026-08-29)
+
+
+### Features
+
+* **ci:** добавить защиту от зацикливания и контроль расходов агента ([#11](https://github.com/ivveta/ai-for-developers-project-387/issues/11)) ([2053152](https://github.com/ivveta/ai-for-developers-project-387/commit/20531527b9054cc0f422fd9e40405d84fb96df6f))
+
 ## [1.1.0](https://github.com/ivveta/ai-for-developers-project-387/compare/v1.0.3...v1.1.0) (2026-08-29)
 
 
