@@ -8,5 +8,6 @@ frontend/.vite/
 backend/dist
 test-results/
 playwright-report/
+.lighthouseci/
 
 opencode.json
