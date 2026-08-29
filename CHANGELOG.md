@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/ivveta/ai-for-developers-project-387/compare/v1.0.3...v1.1.0) (2026-08-29)
+
+
+### Features
+
+* **ci:** добавить регулярную Lighthouse-проверку продакшена ([#10](https://github.com/ivveta/ai-for-developers-project-387/issues/10)) ([7d3347e](https://github.com/ivveta/ai-for-developers-project-387/commit/7d3347eed7f1f34d772f31ed9c3940f3b42db3ce))
+
+
+### Bug Fixes
+
+* исправить e2e-тесты на дни, приходящиеся на выходные ([189a000](https://github.com/ivveta/ai-for-developers-project-387/commit/189a000a555fbcc22f711929261809e923929eaa))
+
 ## [1.0.3](https://github.com/ivveta/ai-for-developers-project-387/compare/v1.0.2...v1.0.3) (2026-08-26)
 
 
