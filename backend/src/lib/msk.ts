@@ -42,6 +42,18 @@ export function mskDateString(utc: Date): string {
   return `${p.year}-${pad2(p.month)}-${pad2(p.day)}`;
 }
 
+/** Номер дня недели по Date.getUTCDay(): воскресенье (0). */
+const WEEKEND_SUNDAY = 0;
+/** Номер дня недели по Date.getUTCDay(): суббота (6). */
+const WEEKEND_SATURDAY = 6;
+
+/** Выходной день в Europe/Moscow: суббота или воскресенье. */
+export function isWeekend(utc: Date): boolean {
+  const shifted = new Date(utc.getTime() + MSK_OFFSET_MINUTES * 60_000);
+  const dow = shifted.getUTCDay();
+  return dow === WEEKEND_SUNDAY || dow === WEEKEND_SATURDAY;
+}
+
 /** Сборка момента UTC из местного времени Europe/Moscow. */
 export function mskToUtc(local: MskLocal): Date {
   return new Date(

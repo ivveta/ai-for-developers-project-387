@@ -10,6 +10,7 @@ import {
   WORKDAY_LENGTH_MINUTES,
   WORKDAY_START_HOUR,
   formatIsoMsk,
+  isWeekend,
   mskDateString,
   mskLocal,
   mskToUtc,
@@ -80,6 +81,12 @@ export function buildWindowSlots(
   const days: DayView[] = [];
   for (let i = 0; i < WINDOW_DAYS; i++) {
     const dayStart = new Date(todayMidnight.getTime() + i * DAY_MS);
+
+    if (isWeekend(dayStart)) {
+      days.push({ date: mskDateString(dayStart), freeCount: 0, slots: [] });
+      continue;
+    }
+
     const workdayStart = new Date(dayStart.getTime() + WORKDAY_START_HOUR * 3_600_000);
 
     const slots: SlotView[] = [];
@@ -129,8 +136,9 @@ export function isAlignedToGrid(startAt: Date, durationMinutes: number): boolean
   return diffMs % (durationMinutes * 60_000) === 0;
 }
 
-/** И7: встреча целиком помещается в рабочий день 09:00–18:00 Europe/Moscow. */
+/** И7: встреча целиком помещается в рабочий день 09:00–18:00 Europe/Moscow и не на выходном. */
 export function isWithinWorkday(startAt: Date, endAt: Date): boolean {
+  if (isWeekend(startAt)) return false;
   const local = mskLocal(startAt);
   const dayStart = mskToUtc({
     year: local.year,
@@ -144,8 +152,9 @@ export function isWithinWorkday(startAt: Date, endAt: Date): boolean {
   return startAt.getTime() >= workdayStart && endAt.getTime() <= workdayEnd;
 }
 
-/** Р6/Р8: начало не в прошлом и внутри 14-дневного окна (до 18:00 14-го дня, §5.2). */
+/** Р6/Р8: начало не в прошлом, внутри 14-дневного окна и не на выходном. */
 export function isInBookingWindow(startAt: Date, now: Date): boolean {
   if (startAt.getTime() < now.getTime()) return false;
+  if (isWeekend(startAt)) return false;
   return startAt.getTime() < bookingWindowEnd(now).getTime();
 }
